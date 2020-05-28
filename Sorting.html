@@ -1,42 +1,8 @@
 <html><head>
 		<title>Sorting Visualiser </title>
 		<script type="text/javascript" src="Handler.js"></script>
-		 <style>
-		 .slider{
-			-webkit-appearance: none;
-			appearance: none;
-			width: 30%;
-			height: 10px; /* Specified height */
-			background: white;
-			outline: none; /* Remove outline */
-			}
-
-			/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-			.slider::-webkit-slider-thumb {
-			-webkit-appearance: none; /* Override default look */
-			appearance: none;
-			width: 25px; /* Set a specific slider handle width */
-			height: 25px; /* Slider handle height */
-			border-radius: 50%;
-			background:  #ffdc6a; /* Yellow background */
-			cursor: pointer; /* Cursor on hover */
-			}
-
-			.slider::-moz-range-thumb {
-			width: 25px; /* Set a specific slider handle width */
-			height: 25px; /* Slider handle height */
-			background:  #ffdc6a; /* Green background */
-			cursor: pointer; /* Cursor on hover */
-			}
-			.bar{
-				background-color: rgb(255, 220, 106);
-				width: 2px;
-				height:300px;
-				position: absolute;
-				top: 110px;
-				left:200px;
-			}
-			</style>
+		<link rel = "stylesheet"  type = "text/css"
+		  href = "Styles.css" />
 	</head>
 	<body style=" background: rgb(245, 245, 245);" >
 		<div style="background: rgb(74, 189, 172);">
