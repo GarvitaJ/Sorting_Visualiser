@@ -39,7 +39,6 @@ function sleep(milliseconds) {
 					 boxes[j]=temp;
 					 document.getElementById(j).style.height=boxes[j];
 					 document.getElementById(j+1).style.height=boxes[j+1];
-					 
 				 }
 			 }
 	 }
