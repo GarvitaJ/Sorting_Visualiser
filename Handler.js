@@ -18,6 +18,18 @@ var boxes=[];
 	 }
  }
 
+ function inc() {
+ 	var p=document.getElementById("Time").value;
+ 	var op=document.getElementById("Time");
+ 	op.innerHTML=p*2;
+ }
+
+function dec() {
+	var p=document.getElementById("Time").value;
+		var op=document.getElementById("Time");
+		op.innerHTML=p/2;
+}
+
 
 function showarr(size,i){
 	document.getElementById("gfg").innerHTML="";
@@ -36,6 +48,8 @@ function showarr(size,i){
 
 
 async function bubblesort() {
+ 	var t=document.getElementById("Time").value;
+ 	var speed=1/t;
 	 var temp;
 	 var n=boxes.length;
 	 var p=n-1;
@@ -49,7 +63,7 @@ async function bubblesort() {
 								boxes[j+1]=boxes[j];
 								boxes[j]=temp;
 								resolve(1);
-							},1)
+							},speed)
 						});
 						await promise;
 					}
