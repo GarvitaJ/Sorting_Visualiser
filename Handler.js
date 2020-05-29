@@ -18,39 +18,28 @@ var boxes=[];
 	 }
  }
 
-// function sleep(milliseconds) {
-// 	var date = Date.now();
-// 	var currentDate = null;
-// 	do {
-// 		currentDate = Date.now();
-// 	} while (currentDate - date < milliseconds);
-// }
 
-function showarr(size){
+function showarr(size,i){
 	document.getElementById("gfg").innerHTML="";
 	var width = ((1147-3*(size-1)) / size);
 	var left= 70;
-	var i=0;
-	for(i=0;i<size;i++){
-		document.getElementById("gfg").innerHTML+="<div id="+i+" style= \"width:"+width+"; height:"+boxes[i]+"px; position:absolute; top:110px; left:"+left+"px; background:rgb(255, 220, 106);\"></div>";
+	var k=0;
+	for(k=0;k<size;k++){
+		if(k>i)
+			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		else
+			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
 		left=parseInt(left)+parseInt(width)+3;
 	}
+
 }
 
-// function bubble(){
-//  	var n=boxes.length,i,j;
-//  	for(i=0;i<n;i++){
-//  		for(j=0;j<n;j++){
-//  			bubblesort(n);
-// 		}
-// 	}
-// }
 
 async function bubblesort() {
 	 var temp;
 	 var n=boxes.length;
+	 var p=n-1;
 	 	for(var i=0;i<n;i++){
-			document.getElementById(i).style.backgroundColor="blue";
 			 for(var j=0;j<n-i-1;j++){
 					document.getElementById(j).style.backgroundColor="red";
 					if(boxes[j]>boxes[j+1]){
@@ -59,15 +48,14 @@ async function bubblesort() {
 								temp=boxes[j+1];
 								boxes[j+1]=boxes[j];
 								boxes[j]=temp;
-								// document.getElementById(j.toString()).style.height=boxes[j];
-								// document.getElementById((j+1).toString()).style.height=boxes[j+1];
-								showarr(n);
 								resolve(1);
-							},10)
+							},1)
 						});
 						await promise;
-
 					}
+				 showarr(n,p);
 			 }
+			 p--;
 		 }
- };
+	showarr(n,p);
+};
