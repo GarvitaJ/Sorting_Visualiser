@@ -1,4 +1,5 @@
-<html><head>
+<html>
+    <head>
 		<title>Sorting Visualiser </title>
 		<script type="text/javascript" src="Handler.js"></script>
 		<link rel = "stylesheet"  type = "text/css"
@@ -8,15 +9,14 @@
 		<div style="background: rgb(74, 189, 172);">
 			<input type="range" id="Range" oninput="setarrsize()" class="slider" min="5" max="150" value="50" style="position: relative; left: 297px; top: 1px;"></input>
 			<textarea id="Size" style="resize: none; margin: 0px; width: 28px; height: 28px; background: white; position: relative; left: 306px; top: 11px;" ></textarea>
-			<button id="Generate" class="b1" onClick="genarr()" style="padding: 8px 24px 7px; background: rgb(255, 220, 106); position: relative; left: 334px;">Generate New Array</button>
-
+			<button id="Generate" class="b1" onClick="genarrrand()" style="padding: 8px 24px 7px; background: rgb(255, 220, 106); position: relative; left: 334px;">Generate New Array</button>
 		</div>
 
 		<div style="position: relative; left: -2px; top: 13px; color: rgb(217, 226, 41); background:#4abdac">
 			<button class="b1" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 176px;">Merge Sort</button>
 			<button class="b1" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 240px;">Quick Sort</button>
 			<button class="b1" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 302px;">Insertion Sort</button>
-			<button class="b1" onClick="bubble()" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 357px;">Bubble Sort</button>
+			<button class="b1" onclick="bubblesort()" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 357px;">Bubble Sort</button>
 			<button class="b1" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 403px;">Selection Sort</button>
 		</div>
 	<div id="gfg" style="gap: 1px ;width: 100%"></div>
