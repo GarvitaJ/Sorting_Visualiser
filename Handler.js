@@ -47,6 +47,7 @@ function showarr(size,i){
 }
 
 
+
 async function bubblesort() {
  	var t=document.getElementById("Time").value;
  	var speed=1/t;
@@ -62,7 +63,7 @@ async function bubblesort() {
 								temp=boxes[j+1];
 								boxes[j+1]=boxes[j];
 								boxes[j]=temp;
-								resolve(1);
+								resolve(speed);
 							},speed)
 						});
 						await promise;
@@ -72,4 +73,51 @@ async function bubblesort() {
 			 p--;
 		 }
 	showarr(n,p);
+};
+
+
+function showarrsel(size,i,min){
+    document.getElementById("gfg").innerHTML="";
+    var width = ((1147-3*(size-1)) / size);
+    var left= 70;
+    var k=0;
+    for(k=0;k<size;k++){
+        if(k==min)
+            document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:blue;\"></div>";
+        else if(k<=i)
+            document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+        else
+            document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
+        left=parseInt(left)+parseInt(width)+3;
+    }
+
+}
+
+
+
+async function selectionsort() {
+	var t=document.getElementById("Time").value;
+	var speed=1/t;
+	var temp,min;
+	var n=boxes.length;
+	var p=n-1;
+	for(var i=0;i<n-1;i++){
+		min=i;
+		for(var j=i+1;j<n;j++){
+			if(boxes[min]>boxes[j]){
+				min=j;
+			}
+		}
+		var promise=new Promise((resolve, reject) =>{
+			setTimeout(function a() {
+				temp=boxes[i];
+				boxes[i]=boxes[min];
+				boxes[min]=temp;
+				resolve(speed);
+			},speed)
+		});
+		await promise;
+		showarrsel(n,i,min);
+	}
+	showarrsel(n,i);
 };
