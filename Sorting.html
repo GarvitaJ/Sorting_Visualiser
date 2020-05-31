@@ -6,16 +6,27 @@
 		  href = "Styles.css" />
 	</head>
 	<body style="background: rgb(245, 245, 245);">
-	<div style="background: rgb(74, 189, 172); position: relative; left: 0px; top: 0px;">
-		<span style="padding: 8px 24px 7px; color: rgb(255, 220, 106); font-size: 20px; font-weight: 500; position: relative; left: 100px;">Array Size:</span>
-		<input type="range" id="Range" oninput="setarrsize()" class="slider" min="5" max="150" value="5" style="position: relative; left: 84px; top: -2px;">
-		<textarea id="Size" style="resize: none; margin: 0px; width: 28px; height: 28px; background: white; position: relative; left: 91px; top: 8px;">5</textarea>
-		<button id="Generate" class="b1" onclick="genarrrand()" style="padding: 8px 24px 7px; background: rgb(255, 220, 106); position: relative; left: 96px; top: -1px;">Generate New Array</button>
-		<span style="padding: 8px 24px 7px; color: rgb(255, 220, 106); position: relative; left: 109px; font-size: 20px; top: 1px;">Speed:</span>
-		<button id="Dec" class="b1" onclick="dec()" style="padding: 1px 13px 3px 6px; background: rgb(255, 220, 106); position: relative; left: 99px; top: -2px; text-align: center;">  - </button>
-		<textarea id="Time" style="resize: none; margin: 0px; width: 50px; height: 28px; background: white; position: relative; left: 99px; top: 8px;">1</textarea>
-		<button id="Inc" class="b1" onclick="inc()" style="padding: 0px 13px 4px 3px; background: rgb(255, 220, 106); position: relative; left: 98px; top: -3px; text-align: center;">   + </button>
-
+	<div style="background: rgb(74, 189, 172); position: relative; left: 0px; top: 0px; height: 50px;padding-bottom: 0px;">
+		<span style="padding: 8px 24px 7px; color: rgb(255, 220, 106); font-size: 20px; font-weight: 500; position: relative; left: 67px; top: -4px;">Array Size:</span>
+		<input type="range" id="Range" oninput="setarrsize()" class="slider" min="5" max="150" value="5" style="position: relative; left: 55px; top: -4px;">
+		<textarea id="Size" style="resize: none; margin: 0px; width: 28px; height: 28px; background: white; position: relative; left: 63px; top: 7px;">5</textarea>
+		<button id="Generate" class="b1" onclick="genarrrand()" style="padding: 8px 24px 7px; background: rgb(255, 220, 106); position: relative; left: 65px; top: -2px;">Generate New Array</button>
+		<span style="padding: 8px 24px 7px; color: rgb(255, 220, 106); position: relative; left: 65px; font-size: 20px; top: 0px;">Speed:</span>
+		<!--		<button id="Dec" class="b1" onclick="dec()" style="padding: 1px 13px 3px 6px; background: rgb(255, 220, 106); position: relative; left: 99px; top: -2px; text-align: center;">  - </button>-->
+		<!--		<textarea id="Time" style="resize: none; margin: 0px; width: 50px; height: 28px; background: white; position: relative; left: 99px; top: 8px;">100</textarea>-->
+		<!--		<button id="Inc" class="b1" onclick="inc()" style="padding: 0px 13px 4px 3px; background: rgb(255, 220, 106); position: relative; left: 98px; top: -3px; text-align: center;">   + </button>-->
+		<label class="container" style="position: relative; left: 891px; top: -31px;">Slow
+			<input type="radio" value=1000 checked="checked" name="radio">
+			<span class="checkmark" style=""></span>
+		</label>
+		<label class="container" style="left: 982px; top: -68px;">Medium
+			<input type="radio" value=300 name="radio">
+			<span class="checkmark"></span>
+		</label>
+		<label class="container" style="left: 1104px; top: -104px;">Fast
+			<input type="radio" value=1 name="radio">
+			<span class="checkmark"></span>
+		</label>
 	</div>
 
 	<div style="position: relative; left: -2px; top: 13px; color: rgb(217, 226, 41); background:#4abdac">
@@ -26,6 +37,7 @@
 		<button class="b1" onclick="selectionsort()" style="padding: 8px 25px; background: rgb(255, 220, 106); position: relative; left: 403px;">Selection Sort</button>
 	</div>
 	<div id="gfg" style="gap: 1px ;width: 100%"></div>
+
 
 
 	</body>

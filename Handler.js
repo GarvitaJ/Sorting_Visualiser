@@ -18,20 +18,16 @@ var boxes=[];
 	 }
  }
 
- function inc() {
- 	var p=document.getElementById("Time").value;
- 	var op=document.getElementById("Time");
- 	op.innerHTML=p*2;
- }
-
-function dec() {
-	var p=document.getElementById("Time").value;
-		var op=document.getElementById("Time");
-		op.innerHTML=p/2;
+function speed() {
+	var speed=document.getElementsByName("radio");
+	var t;
+	for(var i=0;i<speed.length;i++)
+		if(speed[i].checked)
+			t=speed[i].value;
+	return t;
 }
 
-
-function showarr(size,i){
+function showarrbub(size,i){
 	document.getElementById("gfg").innerHTML="";
 	var width = ((1147-3*(size-1)) / size);
 	var left= 70;
@@ -49,8 +45,7 @@ function showarr(size,i){
 
 
 async function bubblesort() {
- 	var t=document.getElementById("Time").value;
- 	var speed=1/t;
+ 	 var t=speed();
 	 var temp;
 	 var n=boxes.length;
 	 var p=n-1;
@@ -63,16 +58,16 @@ async function bubblesort() {
 								temp=boxes[j+1];
 								boxes[j+1]=boxes[j];
 								boxes[j]=temp;
-								resolve(speed);
-							},speed)
+								resolve(1);
+							},t)
 						});
 						await promise;
 					}
-				 showarr(n,p);
+				 showarrbub(n,p);
 			 }
 			 p--;
 		 }
-	showarr(n,p);
+	showarrbub(n,p);
 };
 
 
@@ -96,8 +91,7 @@ function showarrsel(size,i,min){
 
 
 async function selectionsort() {
-	var t=document.getElementById("Time").value;
-	var speed=1/t;
+	var t=speed();
 	var temp,min;
 	var n=boxes.length;
 	var p=n-1;
@@ -113,11 +107,13 @@ async function selectionsort() {
 				temp=boxes[i];
 				boxes[i]=boxes[min];
 				boxes[min]=temp;
-				resolve(speed);
-			},speed)
+				resolve(1);
+			},t)
 		});
 		await promise;
 		showarrsel(n,i,min);
 	}
 	showarrsel(n,i);
 };
+
+
