@@ -89,7 +89,6 @@ function showarrsel(size,i,min){
 }
 
 
-
 async function selectionsort() {
 	var t=speed();
 	var temp,min;
@@ -100,6 +99,9 @@ async function selectionsort() {
 		for(var j=i+1;j<n;j++){
 			if(boxes[min]>boxes[j]){
 				min=j;
+				showarrsel(n,i-1,min);
+				var promise=new Promise(resolve => resolve(1));
+				await promise;
 			}
 		}
 		var promise=new Promise((resolve, reject) =>{
@@ -117,96 +119,56 @@ async function selectionsort() {
 };
 
 
-function showarrmerge(i,j,k){
+function showarrmerge(i,j){
 	document.getElementById("gfg").innerHTML="";
 	var size=boxes.length;
 	var width = ((1147-3*(size-1)) / size);
-	var flag=0,left= 70;
-	var z;
-	for(z=0;z<size;z++){
-		document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"px; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+	var left= 70;
+	var k=0;
+	for(k=0;k<=size;k++){
+		// if(k<=i+j)
+		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		// else
+		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
+		if(k<=i+j && k!=j && k!=i )
+			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		else if (k==j || k==i)
+			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:blue;\"></div>";
+		else if(k>j)
+			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
 		left=parseInt(left)+parseInt(width)+3;
 	}
-	//for(z=0;z<size;z++){
-		// if(z<i+j)
-		// 	document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
-		// else
-		// 	document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
-
-	//	left=parseInt(left)+parseInt(width)+3;
-	//}
-	// if(i==-1)
-	// {
-	// 	for(z=0;z<size;z++){
-	//
-	// 	}
-	// }else{
-	// 	for(z=0;z<size;z++){
-	//
-	// 	}
-	// }
-
 
 }
 
 async function merge(boxes,s,m,e){
 	var t=speed();
-	var L=[],R=[];
-	var i,j,k,n1=m-s+1,n2=e-m;
-	for(i=0;i<n1;i++){
-		L[i] = boxes[s + i];
-	}
-	for (j = 0; j < n2; j++)
-		R[j] = boxes[m + 1+ j];
-	i=0,j=0,k=s;
-	while (i < n1 && j < n2)
-	{
-		document.getElementById(k).style.backgroundColor="red";
-		if (L[i] <= R[j])
-		{
-			boxes[k] = L[i++];
-			var promise=new Promise((resolve, reject) =>
-				setTimeout(function () {
-					showarrmerge(i, -1,k);
-					resolve(1);
+	var k=0;
+	var i=s,j=m+1;
+	var promise= new Promise((resolve, reject) =>
+		setTimeout(function(){
+			while(i<=m && j<=e)
+			{
+				if(boxes[i]<=boxes[j]){
+					temp[k++]=boxes[i++];
 				}
-			),t);
-			await promise;
-		}
-		else
-		{
-			boxes[k] = R[j++];
-			promise= new Promise((resolve, reject) =>
-				setTimeout(function(){
-					showarrmerge(-1, j, k);
-					resolve(1);
-				},t)
-			);
-			await promise;
-		}
-		k++;
-	}
-	while(i<n1) {
-		boxes[k++] = L[i++];
-		promise= new Promise((resolve, reject) =>
-			setTimeout(function(){
-				showarrmerge(i, -1, k);
-				resolve(1);
-			},t)
-		);
-		await promise;
-
-	}
-	while(j<n2) {
-		boxes[k++] = R[j++];
-		promise= new Promise((resolve, reject) =>
-			setTimeout(function(){
-				showarrmerge(-1, j, k);
-				resolve(1);
-			},t)
-		);
-		await promise;
-	}
+				else
+				{
+					temp[k++]=boxes[j++];
+				}
+			}
+			while(i<=m)
+				temp[k++]=boxes[i++];
+			while(j<=e)
+				temp[k++]=boxes[j++];
+			for(var p = s; p <= e; p+= 1) {
+				boxes[p] = temp[p - s]
+			}
+			resolve(1);
+		},t)
+	);
+	await promise;
+	showarrmerge(s,e);
 }
 
 function mergesrt(boxes,s,e) {
@@ -216,9 +178,61 @@ function mergesrt(boxes,s,e) {
 		mergesrt(boxes,m+1,e);
 		merge(boxes,s,m,e);
 	}
+
 }
 
 function mergesort() {
 	var s=0,e=boxes.length-1;
 	mergesrt(boxes,s,e);
+}
+
+
+function showarrquic() {
+	document.getElementById("gfg").innerHTML="";
+	var size=boxes.length;
+	var width = ((1147-3*(size-1)) / size);
+	var left= 70;
+	var k=0;
+	for(k=0;k<=size;k++){
+
+	}
+}
+
+function partition (arr, low, high)
+{
+	var pivot = arr[high];
+	var i = (low - 1);
+
+	for (var j = low; j <= high- 1; j++)
+	{
+		if (arr[j] < pivot)
+		{
+			i++;
+			temp=arr[i];
+			arr[i]=arr[j];
+			arr[j]=temp;
+		}
+	}
+	temp=arr[i+1];
+	arr[i+1]=arr[high];
+	arr[high]=temp;
+	return (i + 1);
+}
+
+function quickSrt(arr, low, high)
+{
+	if (low < high)
+	{
+		var pi = partition(arr, low, high);
+		quickSrt(arr, low, pi - 1);
+		quickSrt(arr, pi + 1, high);
+	}
+}
+
+function quickSort() {
+	quickSrt(boxes,0,boxes.length-1);
+	document.getElementById("gfg").innerHTML="";
+	for (var i=0;i<boxes.length;i++){
+		document.getElementById("gfg").innerHTML="";
+	}
 }
