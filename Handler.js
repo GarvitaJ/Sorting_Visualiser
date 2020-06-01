@@ -117,57 +117,95 @@ async function selectionsort() {
 };
 
 
-function showarrmerge(i,j){
+function showarrmerge(i,j,k){
 	document.getElementById("gfg").innerHTML="";
 	var size=boxes.length;
 	var width = ((1147-3*(size-1)) / size);
-	var left= 70;
-	var k=0;
-	for(k=0;k<size;k++){
-		// if(k==min)
-		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:blue;\"></div>";
-		// else if(k<=i)
-		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
-		// else
-		if(k<i+j)
-			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+temp[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
-		else
-			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
-
+	var flag=0,left= 70;
+	var z;
+	for(z=0;z<size;z++){
+		document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"px; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
 		left=parseInt(left)+parseInt(width)+3;
 	}
+	//for(z=0;z<size;z++){
+		// if(z<i+j)
+		// 	document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		// else
+		// 	document.getElementById("gfg").innerHTML+="<div id="+z+" style= \"width:"+width+"; height:"+boxes[z]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
+
+	//	left=parseInt(left)+parseInt(width)+3;
+	//}
+	// if(i==-1)
+	// {
+	// 	for(z=0;z<size;z++){
+	//
+	// 	}
+	// }else{
+	// 	for(z=0;z<size;z++){
+	//
+	// 	}
+	// }
+
 
 }
 
-function merge(boxes,s,m,e){
+async function merge(boxes,s,m,e){
 	var t=speed();
-	var k=0;
-	var i=s,j=m+1;
-	while(i<=m && j<=e)
+	var L=[],R=[];
+	var i,j,k,n1=m-s+1,n2=e-m;
+	for(i=0;i<n1;i++){
+		L[i] = boxes[s + i];
+	}
+	for (j = 0; j < n2; j++)
+		R[j] = boxes[m + 1+ j];
+	i=0,j=0,k=s;
+	while (i < n1 && j < n2)
 	{
-		if(boxes[i]<=boxes[j]){
-			temp[k++]=boxes[i++];
+		document.getElementById(k).style.backgroundColor="red";
+		if (L[i] <= R[j])
+		{
+			boxes[k] = L[i++];
+			var promise=new Promise((resolve, reject) =>
+				setTimeout(function () {
+					showarrmerge(i, -1,k);
+					resolve(1);
+				}
+			),t);
+			await promise;
 		}
 		else
 		{
-			temp[k++]=boxes[j++];
+			boxes[k] = R[j++];
+			promise= new Promise((resolve, reject) =>
+				setTimeout(function(){
+					showarrmerge(-1, j, k);
+					resolve(1);
+				},t)
+			);
+			await promise;
 		}
-
-		// var promise= new Promise((resolve, reject) =>
-		// 	setTimeout(function(){
-		//
-		// 	},t)
-		// );
-		// await promise;
-
-		// showarrmerge(i,j);
+		k++;
 	}
-	while(i<=m)
-		temp[k++]=boxes[i++];
-	while(j<=e)
-		temp[k++]=boxes[j++];
-	for(var p = s; p <= e; p+= 1) {
-		boxes[p] = temp[p - s]
+	while(i<n1) {
+		boxes[k++] = L[i++];
+		promise= new Promise((resolve, reject) =>
+			setTimeout(function(){
+				showarrmerge(i, -1, k);
+				resolve(1);
+			},t)
+		);
+		await promise;
+
+	}
+	while(j<n2) {
+		boxes[k++] = R[j++];
+		promise= new Promise((resolve, reject) =>
+			setTimeout(function(){
+				showarrmerge(-1, j, k);
+				resolve(1);
+			},t)
+		);
+		await promise;
 	}
 }
 
@@ -178,18 +216,9 @@ function mergesrt(boxes,s,e) {
 		mergesrt(boxes,m+1,e);
 		merge(boxes,s,m,e);
 	}
-
 }
 
 function mergesort() {
 	var s=0,e=boxes.length-1;
-	document.getElementById("gfg").innerHTML="";
-	for(var i=0;i<boxes.length;i++){
-		document.getElementById("gfg").innerHTML+=boxes[i]+" ";
-	}
 	mergesrt(boxes,s,e);
-	document.getElementById("gfg").innerHTML+="\n";
-	for(var i=0;i<boxes.length;i++){
-		document.getElementById("gfg").innerHTML+=boxes[i]+" ";
-	}
 }
