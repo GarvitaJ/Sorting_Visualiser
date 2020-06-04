@@ -126,10 +126,6 @@ function showarrmerge(i,j){
 	var left= 70;
 	var k=0;
 	for(k=0;k<=size;k++){
-		// if(k<=i+j)
-		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
-		// else
-		// 	document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
 		if(k<=i+j && k!=j && k!=i )
 			document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
 		else if (k==j || k==i)
@@ -187,52 +183,134 @@ function mergesort() {
 }
 
 
-function showarrquic() {
+function showarrquic(pivot,low,high) {
 	document.getElementById("gfg").innerHTML="";
 	var size=boxes.length;
 	var width = ((1147-3*(size-1)) / size);
 	var left= 70;
 	var k=0;
 	for(k=0;k<=size;k++){
+		if(k==pivot)
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		else if(k==low || k== high)
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:blue;\"></div>";
+		else
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
+		left=parseInt(left)+parseInt(width)+3;
+	}
+}
 
+
+function showarr() {
+	document.getElementById("gfg").innerHTML="";
+	var size=boxes.length;
+	var width = ((1147-3*(size-1)) / size);
+	var left= 70;
+	var k=0;
+	for(k=0;k<=size;k++){
+		document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:green;\"></div>";
+		left=parseInt(left)+parseInt(width)+3;
 	}
 }
 
 function partition (arr, low, high)
 {
+	var temp,t=speed();
 	var pivot = arr[high];
 	var i = (low - 1);
-
-	for (var j = low; j <= high- 1; j++)
-	{
+	for (var j = low; j <= high- 1; j++) {
 		if (arr[j] < pivot)
 		{
-			i++;
-			temp=arr[i];
-			arr[i]=arr[j];
-			arr[j]=temp;
+			// var promise = new Promise(resolve =>
+			// 	setTimeout(function () {
+					i++;
+					temp=arr[i];
+					arr[i]=arr[j];
+					arr[j]=temp;
+				// 	resolve(1);
+				// },t));
+				// await promise;
 		}
 	}
 	temp=arr[i+1];
 	arr[i+1]=arr[high];
 	arr[high]=temp;
+	// showarrquic();
 	return (i + 1);
 }
 
-function quickSrt(arr, low, high)
+async function quickSrt(arr, low, high)
 {
 	if (low < high)
 	{
+		var t=speed();
 		var pi = partition(arr, low, high);
-		quickSrt(arr, low, pi - 1);
-		quickSrt(arr, pi + 1, high);
+		var promise = new Promise(resolve =>
+			setTimeout(function () {
+				quickSrt(arr, low, pi - 1);
+				showarrquic(pi,low,high);
+				resolve(1);
+			},t));
+		await promise;
+		promise = new Promise(resolve =>
+			setTimeout(function () {
+				quickSrt(arr, pi + 1, high);
+				showarrquic(pi,low,high);
+				resolve(1);
+			},t));
+		await promise;
 	}
 }
 
-function quickSort() {
+function quicksort() {
 	quickSrt(boxes,0,boxes.length-1);
+
+}
+
+function showarrins(i,j) {
 	document.getElementById("gfg").innerHTML="";
-	for (var i=0;i<boxes.length;i++){
-		document.getElementById("gfg").innerHTML="";
+	var size=boxes.length;
+	var width = ((1147-3*(size-1)) / size);
+	var left= 70;
+	var k=0;
+	for(k=0;k<=size;k++){
+		if(k==i)
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:red;\"></div>";
+		else if(k<i && k>=j)
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:green;\"></div>";
+		else if(k<=i)
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:blue;\"></div>";
+		else
+			document.getElementById("gfg").innerHTML+="<div id+="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
+		left=parseInt(left)+parseInt(width)+3;
 	}
+}
+
+async function insertionsort(){
+	var t=speed();
+	var n=boxes.length,i, key, j;
+	for (i = 1; i < n; i++) {
+		key = boxes[i];
+		j = i - 1;
+		var promise = new Promise(resolve => {
+			setTimeout(async function () {
+				while (j >= 0 && boxes[j] > key) {
+					promise = new Promise(resolve => {
+						setTimeout(function () {
+							boxes[j + 1] = boxes[j];
+							j = j - 1;
+							showarrins(i,j);
+							resolve(1);
+						},1);
+					});
+					await  promise;
+				}
+				boxes[j + 1] = key;
+				resolve(1);
+			},t);
+		});
+		await  promise;
+		showarrins(i,j);
+	}
+
 }
