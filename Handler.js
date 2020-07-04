@@ -1,8 +1,21 @@
 var boxes=[],temp=[], abort=false;
 
 function stop1(){
+	var b1=document.getElementsByClassName("b1");
+	for(i=0;i<b1.length();i++){
+		b1[i].disabled=false;
+	}
 	abort=true;
 }
+function disablebutton() {
+	var b1=document.getElementsByClassName("b1");
+	for(i=0;i<b1.length();i++){
+		b1[i].disabled=true;
+	}
+}
+
+
+
  function setarrsize(){
 	 var size=document.getElementById("Range");
 	 var output=document.getElementById("Size");
@@ -49,6 +62,7 @@ function showarrbub(size,i){
 
 
 async function bubblesort() {
+	// disablebutton();
  	 var t=speed();
 	 var temp;
 	 var n=boxes.length;
@@ -76,6 +90,7 @@ async function bubblesort() {
 			 p--;
 		 }
 	showarrbub(n,p);
+	 stop1();
 };
 
 
@@ -93,11 +108,11 @@ function showarrsel(size,i,min){
             document.getElementById("gfg").innerHTML+="<div id="+k+" style= \"width:"+width+"; height:"+boxes[k]+"px; position:absolute; top:110px; left:"+left+"px; background-color:rgb(255, 220, 106);\"></div>";
         left=parseInt(left)+parseInt(width)+3;
     }
-
 }
 
 
 async function selectionsort() {
+	disablebutton();
 	var t=speed();
 	var temp,min;
 	var n=boxes.length;
@@ -128,6 +143,7 @@ async function selectionsort() {
 		showarrsel(n,i,min);
 	}
 	showarrsel(n,i);
+	stop1();
 };
 
 
@@ -201,12 +217,13 @@ function mergesrt(boxes,s,e) {
 		mergesrt(boxes,m+1,e);
 		merge(boxes,s,m,e);
 	}
-
 }
 
 function mergesort() {
+	disablebutton();
 	var s=0,e=boxes.length-1;
 	mergesrt(boxes,s,e);
+	stop1();
 }
 
 
@@ -306,8 +323,9 @@ async function quickSrt(arr, low, high)
 }
 
 function quicksort() {
+	disablebutton();
 	quickSrt(boxes,0,boxes.length-1);
-
+	stop1();
 }
 
 function showarrins(i,j) {
@@ -330,6 +348,7 @@ function showarrins(i,j) {
 }
 
 async function insertionsort(){
+	disablebutton();
 	var t=speed();
 	var n=boxes.length,i, key, j;
 	for (i = 1; i < n; i++) {
@@ -359,5 +378,5 @@ async function insertionsort(){
 		await  promise;
 		showarrins(i,j);
 	}
-
+	stop1();
 }
