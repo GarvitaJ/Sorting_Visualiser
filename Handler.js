@@ -1,4 +1,8 @@
-var boxes=[],temp=[];
+var boxes=[],temp=[], abort=false;
+
+function stop1(){
+	abort=true;
+}
  function setarrsize(){
 	 var size=document.getElementById("Range");
 	 var output=document.getElementById("Size");
@@ -51,6 +55,10 @@ async function bubblesort() {
 	 var p=n-1;
 	 	for(var i=0;i<n;i++){
 			 for(var j=0;j<n-i-1;j++){
+			 	if(abort){
+			 		abort=false;
+			 		return;
+				}
 					document.getElementById(j).style.backgroundColor="red";
 					if(boxes[j]>boxes[j+1]){
 						var promise=new Promise((resolve, reject) =>{
@@ -97,6 +105,10 @@ async function selectionsort() {
 	for(var i=0;i<n-1;i++){
 		min=i;
 		for(var j=i+1;j<n;j++){
+			if(abort){
+				abort=false;
+				return;
+			}
 			if(boxes[min]>boxes[j]){
 				min=j;
 				showarrsel(n,i-1,min);
@@ -145,6 +157,10 @@ async function merge(boxes,s,m,e){
 		setTimeout(function(){
 			while(i<=m && j<=e)
 			{
+				if(abort){
+					abort=false;
+					return;
+				}
 				if(boxes[i]<=boxes[j]){
 					temp[k++]=boxes[i++];
 				}
@@ -153,10 +169,21 @@ async function merge(boxes,s,m,e){
 					temp[k++]=boxes[j++];
 				}
 			}
-			while(i<=m)
+			while(i<=m){
+				if(abort){
+					abort=false;
+					return;
+				}
 				temp[k++]=boxes[i++];
-			while(j<=e)
+			}
+			while(j<=e){
+				if(abort){
+					abort=false;
+					return;
+				}
 				temp[k++]=boxes[j++];
+			}
+
 			for(var p = s; p <= e; p+= 1) {
 				boxes[p] = temp[p - s]
 			}
@@ -219,6 +246,10 @@ function partition (arr, low, high)
 	var pivot = arr[high];
 	var i = (low - 1);
 	for (var j = low; j <= high- 1; j++) {
+		if(abort){
+			abort=false;
+			return;
+		}
 		if (arr[j] < pivot)
 		{
 			// var promise = new Promise(resolve =>
@@ -244,9 +275,17 @@ async function quickSrt(arr, low, high)
 	if (low < high)
 	{
 		var t=speed();
+		if(abort){
+			abort=false;
+			return;
+		}
 		var pi = partition(arr, low, high);
 		var promise = new Promise(resolve =>
 			setTimeout(function () {
+				if(abort){
+					abort=false;
+					return;
+				}
 				quickSrt(arr, low, pi - 1);
 				showarrquic(pi,low,high);
 				resolve(1);
@@ -254,6 +293,10 @@ async function quickSrt(arr, low, high)
 		await promise;
 		promise = new Promise(resolve =>
 			setTimeout(function () {
+				if(abort){
+					abort=false;
+					return;
+				}
 				quickSrt(arr, pi + 1, high);
 				showarrquic(pi,low,high);
 				resolve(1);
@@ -295,6 +338,10 @@ async function insertionsort(){
 		var promise = new Promise(resolve => {
 			setTimeout(async function () {
 				while (j >= 0 && boxes[j] > key) {
+					if(abort){
+						abort=false;
+						return;
+					}
 					promise = new Promise(resolve => {
 						setTimeout(function () {
 							boxes[j + 1] = boxes[j];
